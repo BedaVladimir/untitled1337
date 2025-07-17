@@ -3,6 +3,7 @@ package ru.stga.tests;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import ru.stga.bookstore.tests.props.TestConfig;
 import ru.stga.bookstore.tests.rest.enums.Category;
 import ru.stga.bookstore.tests.rest.model.request.Book;
 
@@ -17,8 +18,8 @@ public class CreateTestBook {
                 "Mark Twain", 350, 10, Category.Adventures);
 
 
-        given().baseUri("http://localhost:8080").
-                basePath("/rest-api/").
+        given().baseUri(TestConfig.Uri.value).
+                basePath(TestConfig.Path.value).
                 contentType(ContentType.JSON).
                 body(book).
                 log().all(). // блок given() описывает базовое состояние
