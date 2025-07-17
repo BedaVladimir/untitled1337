@@ -3,6 +3,8 @@ package ru.stga.tests;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import ru.stga.bookstore.tests.rest.enums.Category;
+import ru.stga.bookstore.tests.rest.model.request.Book;
 
 import static io.restassured.RestAssured.given;
 
@@ -11,14 +13,9 @@ public class CreateTestBook {
     @Test
     public void createBookTest() {
 
-        String book = "{\n" +
-                "  \"title\": \"The Adventures of Tom Sawyer\",\n" +
-                "  \"description\": \"The story about Tom Sawyer.\",\n" +
-                "  \"author\": \"Mark Twain\",\n" +
-                "  \"price\": 350,\n" +
-                "  \"count\": 10,\n" +
-                "  \"category\": \"Adventures\"\n" +
-                "}"; // Это будет телом запроса
+        Book book = new Book("The Adventures of Tom Sawyer", "The story about Tom Sawyer.",
+                "Mark Twain", 350, 10, Category.Adventures);
+
 
         given().baseUri("http://localhost:8080").
                 basePath("/rest-api/").
