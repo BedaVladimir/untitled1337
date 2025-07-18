@@ -1,11 +1,12 @@
 package ru.stga.bookstore.tests.rest.client;
 
 import io.restassured.http.ContentType;
-import io.restassured.response.ValidatableResponse;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.AllArgsConstructor;
 import ru.stga.bookstore.tests.props.TestConfig;
 import ru.stga.bookstore.tests.rest.model.request.Book;
+import ru.stga.bookstore.tests.rest.model.response.BookValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
@@ -33,19 +34,22 @@ public class TestClient {
 
     private RequestSpecification getRequestSpec(Object body) {
         /*
-        те же базовые действия +  body
+        те же базовые действия + body
          */
 
         return getRequestSpec().
                 body(body);
     }
 
-    public ValidatableResponse create(Book book) {
+    public BookValidatableResponse create(Book book) {
         /*
         пост метод с созданием книги
          */
-        return getRequestSpec(book).
-                when().post("books").
-                then().log().all();
+        Response response = getRequestSpec(book).when().
+                post("/books");
+
+        response.then().log().all();
+
+        return new BookValidatableResponse(response);
     }
 }
