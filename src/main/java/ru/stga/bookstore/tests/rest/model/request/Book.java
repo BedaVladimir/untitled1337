@@ -1,5 +1,6 @@
 package ru.stga.bookstore.tests.rest.model.request;
 import lombok.*;
+import lombok.experimental.Accessors;
 import ru.stga.bookstore.tests.rest.enums.Category;
 
 @Getter
@@ -8,6 +9,7 @@ import ru.stga.bookstore.tests.rest.enums.Category;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Accessors(chain = true)
 public class Book {
 
     private String title;
@@ -24,6 +26,15 @@ public class Book {
         this.price = book.price;
         this.count = book.count;
         this.category = book.category;
+    }
+
+    public static Book defaultOf() {
+        /*
+        Статический конструктор, который создает книгу с предзаполненными параметрами
+         */
+        return new Book("The Adventures of Tom Sawyer",
+                "The story about Tom Sawyer.",
+                "Mark Twain", 350, 10, Category.Adventures);
     }
 
 }

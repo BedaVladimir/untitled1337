@@ -1,6 +1,8 @@
 package ru.stga.tests;
 
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stga.bookstore.tests.rest.client.TestClient;
 import ru.stga.bookstore.tests.rest.enums.Category;
@@ -10,11 +12,27 @@ import ru.stga.bookstore.tests.rest.model.response.BookValidatableResponse;
 
 public class CreateTestBook {
 
-    @Test
-    public void createBookTest() {
+    @DataProvider
+    public Object[][] createBooks() {
+        return new Object[][] {
+                { Book.defaultOf() },
+                { Book.defaultOf().setTitle(RandomStringUtils.randomAlphabetic(3)) },
+                { Book.defaultOf().setTitle(RandomStringUtils.randomAlphabetic(256)) },
+                { Book.defaultOf().setDescription(RandomStringUtils.randomAlphabetic(3)) },
+                { Book.defaultOf().setDescription(RandomStringUtils.randomAlphabetic(512)) },
+                { Book.defaultOf().setAuthor(RandomStringUtils.randomAlphabetic(3)) },
+                { Book.defaultOf().setAuthor(RandomStringUtils.randomAlphabetic(100)) },
+                { Book.defaultOf().setPrice(0) },
+                { Book.defaultOf().setCount(0) },
+                { Book.defaultOf().setCategory(Category.Detective) },
+                { Book.defaultOf().setCategory(Category.Horror) },
+                { Book.defaultOf().setCategory(Category.Thriller) },
+                { Book.defaultOf().setCategory(Category.Fiction)}
+        };
+    }
 
-        Book book = new Book("The Adventures of Tom Sawyer", "The story about Tom Sawyer.",
-                "Mark Twain", 350, 10, Category.Adventures);
+    @Test(dataProvider = "createBooks")
+    public void createBookTest(Book book) {
 
         TestClient testClient = new TestClient();
 
