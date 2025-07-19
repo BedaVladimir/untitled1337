@@ -37,4 +37,22 @@ public class BookValidatableResponse {
         Assert.assertEquals(new Book(model), expectedBook);
         return this;
     }
+
+    public BookValidatableResponse checkId(Integer expectedId) {
+        response.then().body("id", Matchers.equalTo(expectedId));
+        return this;
+    }
+
+    public Integer getId() {
+        return response.jsonPath().getInt("id");
+    }
+
+    public BookValidatableResponse checkCount(Integer expectedCount) {
+        response.then().body("count", Matchers.equalTo(expectedCount));
+        return this;
+    }
+
+    public Integer getCount() {
+        return response.jsonPath().getInt("count");
+    }
 }

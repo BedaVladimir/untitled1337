@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stga.bookstore.tests.rest.client.TestClient;
 import ru.stga.bookstore.tests.rest.enums.Category;
 import ru.stga.bookstore.tests.rest.model.request.Book;
+import ru.stga.bookstore.tests.rest.model.response.BookValidatableResponse;
 
 
 public class CreateTestBook {
@@ -17,9 +18,16 @@ public class CreateTestBook {
 
         TestClient testClient = new TestClient();
 
-        testClient.create(book).
+        BookValidatableResponse response = testClient.create(book).
                 checkStatusCode(201).
                 checkIdNotNull().
+                checkLastUpdated().
+                checkBook(book);
+
+        testClient.read(response.getId()).
+                checkStatusCode(200).
+                checkId(response.getId()).
+                checkCount(response.getCount()).
                 checkLastUpdated().
                 checkBook(book);
     }

@@ -52,4 +52,16 @@ public class TestClient {
 
         return new BookValidatableResponse(response);
     }
+
+    public BookValidatableResponse read(Integer id) {
+        /*
+        гет метод получения книги по айди
+         */
+        Response response = getRequestSpec().when().
+                get("/books/{id}", id);
+
+        response.then().log().all();
+
+        return new BookValidatableResponse(response);
+    }
 }
