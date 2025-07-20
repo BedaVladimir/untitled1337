@@ -1,16 +1,16 @@
-package ru.stga.tests;
+package ru.stga.tests.create;
 
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import ru.stga.bookstore.tests.rest.client.TestClient;
 import ru.stga.bookstore.tests.rest.enums.Category;
 import ru.stga.bookstore.tests.rest.model.request.Book;
 import ru.stga.bookstore.tests.rest.model.response.BookValidatableResponse;
+import ru.stga.tests.BookStoreTestBase;
 
 
-public class CreateTestBook {
+public class CreateTestBook extends BookStoreTestBase {
 
     @DataProvider
     public Object[][] createBooks() {
@@ -33,8 +33,6 @@ public class CreateTestBook {
 
     @Test(dataProvider = "createBooks")
     public void createBookTest(Book book) {
-
-        TestClient testClient = new TestClient();
 
         BookValidatableResponse response = testClient.create(book).
                 checkStatusCode(201).

@@ -55,4 +55,10 @@ public class BookValidatableResponse {
     public Integer getCount() {
         return response.jsonPath().getInt("count");
     }
+
+    public BookValidatableResponse checkErrorResponse(BookResponse expectedResponse) {
+        response.then().body("timestamp", Matchers.notNullValue());
+        Assert.assertEquals(model, expectedResponse);
+        return this;
+    }
 }
