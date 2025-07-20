@@ -76,4 +76,16 @@ public class TestClient {
 
         return new BookValidatableResponse(response);
     }
+
+    public BookValidatableResponse delete(Integer id) {
+        /*
+        делит метод для удаления книги по айди
+         */
+        Response response = getRequestSpec().when().
+                delete("/books/{id}", id);
+
+        response.then().log().all();
+
+        return new BookValidatableResponse(response);
+    }
 }
